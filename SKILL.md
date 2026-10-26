@@ -7,9 +7,11 @@ description: >
   "sponsor desk report", "is the sponsor wallet running low". Evaluates a user-signed request against an
   operator policy (allowlisted contracts + methods, per-address daily quota, global daily budget, abuse
   heuristics), then submits it with the sponsor key paying gas while the user stays msg.sender. Writes a
-  spend ledger and daily JSON / Markdown / HTML reports. Read-only status via JSON-RPC or a Pharos Chain MCP server.
+  spend ledger and daily JSON / Markdown / HTML reports. Acts as a Policy Gatekeeper: "would this be allowed?",
+  "why was this denied?", "show the audit log" — every request gets allow/deny plus the deciding rule
+  (spend limit, allowlist, time window), denies are never executed, and all decisions go to an append-only audit log. Read-only status via JSON-RPC or a Pharos Chain MCP server.
 license: MIT
-version: 0.1.0
+version: 0.2.0
 metadata:
   author: syariffadilla
   networks: [atlantic-testnet]
@@ -50,6 +52,9 @@ All commands print a single JSON object. Run from the skill folder: `npx tsx src
 |---|---|---|
 | "Is the desk healthy / how much budget is left / sponsor balance?" | `status [--account 0x..]` (RPC) or `status --mcp <url>` | No |
 | "Show / check the sponsorship rules" | `policy` | No |
+| "What are the gatekeeper rules?" (spend limit, allowlist, time window) | `rules` | No |
+| "Would this request be allowed? Which rule decides?" | `check --request req.json` | No |
+| "Show / export / verify the audit log", "what was denied today?" | `audit [--verify] [--verdict deny] [--format json\|jsonl\|csv\|md] [--out file]` | No |
 | "Prepare a sponsored request for user X calling f(...)" (user side) | `request:build --to <contract> --method "f(type name)" --args '[...]' --out req.json` | No (signs only) |
 | "Would we sponsor this?" | `sponsor --request req.json --dry-run` | No |
 | "Sponsor this request" | `sponsor --request req.json` | **Yes**, sponsor pays gas |
@@ -60,21 +65,44 @@ All commands print a single JSON object. Run from the skill folder: `npx tsx src
 
 Details: `references/commands.md`. Policy fields and heuristics: `references/policy.md`.
 
+## Policy Gatekeeper
+
+Policy file: `examples/policy.gatekeeper.json`, with the three required rule types named explicitly:
+`rules.spendLimit` (per-tx gas cap + max cost, per-address daily tx/wei quota, global daily budget),
+`rules.allowlist` (contracts + 4-byte methods, sender allow/deny lists, native value) and `rules.timeWindow`
+(allowed days/hours in an IANA timezone, blackout ranges; allowlist entries can carry their own window).
+
+| Requirement | How this skill meets it | Proof |
+|---|---|---|
+| 01 policy with spend limit, allowlist, time window | `examples/policy.gatekeeper.json`, `src/policy.ts`, `src/rules.ts`, command `rules` | `test/gatekeeper.test.ts` |
+| 02 allow/deny + deciding rule | `check` / `sponsor` output `verdict` + `decidedBy {rule, ruleType, code, message}` + `trace` | `docs/gatekeeper/run.json` |
+| 03 denies never executed, one per rule type | stages short-circuit before the sponsor signs/broadcasts | live run: sponsor nonce unchanged on 4 denies; `SpyChain` tests |
+| 04 audit log | `src/audit.ts`, `data/audit.jsonl` (`--audit` / `DESK_AUDIT`), command `audit` | `docs/gatekeeper/audit.jsonl` (hash chain verifies) |
+
+Live proof (Atlantic, 2026-10-26): ALLOW tx `0x29a2c59ad71a1a7e31762b2dffc2c5799fd19f76a9d625dc34a47c0aeb64cb40`
+(https://atlantic.pharosscan.xyz/tx/0x29a2c59ad71a1a7e31762b2dffc2c5799fd19f76a9d625dc34a47c0aeb64cb40). Full table: `docs/POLICY_GATEKEEPER.md`.
+
+When reporting a decision to the operator, always name the deciding rule id (e.g. `time_window.hours`) and its
+message, and say "not executed" for every deny.
+
 ## Decision flow (what `sponsor` does, in order)
 
-1. Static policy: chainId, deadline window, max calls, every call's target **and** 4-byte selector allowlisted, no native value.
+1. Request validity (chainId, deadline window, max calls), then the **allowlist** rule (sender deny/allow, every call's
+   target **and** 4-byte selector, no native value), then the **time window** rule (desk hours, blackouts, per-method windows).
 2. Signature: EIP-712 `Execute(Call[] calls,uint256 nonce,uint256 deadline)` must recover to the user's address.
 3. Delegation: if the account is not yet delegated to the policy's executor, the request must carry a valid
    EIP-7702 authorization for exactly that executor, this chain, and the account's current nonce.
 4. Executor nonce must match (replay protection).
-5. Ledger checks with a worst-case reservation (`maxGasPerTx × maxFeePerGas`): repeated-failure cooldown,
-   per-address burst, brand-new-address burst, per-address daily tx count + wei cap, global daily budget (UTC days).
+5. **Spend limit** with a worst-case reservation (`maxGasPerTx × maxFeePerGas`): per-tx max cost, per-address daily
+   tx count + wei cap, global daily budget (UTC days). Then abuse heuristics: repeated-failure cooldown,
+   per-address burst, brand-new-address burst.
 6. Simulate with `eth_estimateGas` (+30% buffer, capped at `maxGasPerTx`).
 7. Send (type `0x04` if an authorization is needed, else type `0x02`) and record receipt cost
    (`gasUsed × effectiveGasPrice`) in the ledger.
 
-Every request, including rejections, is one ledger line with machine-readable reason codes
-(`NOT_ALLOWLISTED_TARGET`, `NOT_ALLOWLISTED_METHOD`, `ADDRESS_DAILY_TX_QUOTA`, `GLOBAL_DAILY_BUDGET`,
+Every request, including rejections, is one ledger line and one audit-log line with machine-readable reason codes
+and rule ids (`NOT_ALLOWLISTED_TARGET`, `NOT_ALLOWLISTED_METHOD`, `SENDER_DENYLISTED`, `OUTSIDE_TIME_WINDOW`,
+`BLACKOUT_WINDOW`, `SPEND_LIMIT_PER_TX`, `ADDRESS_DAILY_TX_QUOTA`, `GLOBAL_DAILY_BUDGET`,
 `NEW_ADDRESS_BURST`, `ADDRESS_BURST`, `REPEATED_FAILURES`, `BAD_SIGNATURE`, `BAD_AUTHORIZATION`, ...).
 Rejected requests never reach the chain, so they have no transaction hash.
 
