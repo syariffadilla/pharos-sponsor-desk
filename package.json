@@ -1,7 +1,7 @@
 {
   "name": "pharos-sponsor-desk",
-  "version": "0.1.0",
-  "description": "Agent skill + CLI for operators to sponsor users' gas on Pharos Atlantic testnet with quotas, allowlists, abuse heuristics and a spend ledger.",
+  "version": "0.2.0",
+  "description": "Agent skill + CLI for Pharos Atlantic testnet: a Policy Gatekeeper (spend limit, allowlist, time window) in front of EIP-7702 gas sponsorship, with allow/deny + deciding rule, a hash-chained audit log, quotas and a spend ledger.",
   "type": "module",
   "license": "MIT",
   "scripts": {
@@ -10,9 +10,12 @@
     "desk": "tsx src/cli.ts",
     "demo:live": "tsx scripts/demo-live.ts",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "demo:gatekeeper": "tsx scripts/demo-gatekeeper.ts"
   },
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
     "viem": "^2.57.11"
   },
