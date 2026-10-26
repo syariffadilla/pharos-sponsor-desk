@@ -1,0 +1,26 @@
+{
+  "name": "pharos-sponsor-desk",
+  "version": "0.1.0",
+  "description": "Agent skill + CLI for operators to sponsor users' gas on Pharos Atlantic testnet with quotas, allowlists, abuse heuristics and a spend ledger.",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "compile": "tsx scripts/compile.ts",
+    "deploy": "tsx scripts/deploy.ts",
+    "desk": "tsx src/cli.ts",
+    "demo:live": "tsx scripts/demo-live.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "viem": "^2.57.11"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "solc": "0.8.28",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}
