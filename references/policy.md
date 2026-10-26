@@ -1,6 +1,31 @@
 # Policy reference
 
-Policy is one JSON file (`assets/policy.example.json`). All wei amounts are decimal strings. Days are UTC.
+Policy is one JSON file. All wei amounts are decimal strings. Quota/budget days are UTC.
+
+## Gatekeeper format (three rule types)
+
+`examples/policy.gatekeeper.json` groups the rules under `rules`:
+
+| Rule type | Field | Rule id (reason code) |
+|---|---|---|
+| spend limit | `rules.spendLimit.maxGasPerTx` | `spend_limit.max_gas_per_tx` (`GAS_CAP_EXCEEDED`) |
+| spend limit | `rules.spendLimit.maxCostPerTxWei` (optional) | `spend_limit.max_cost_per_tx` (`SPEND_LIMIT_PER_TX`): worst case `maxGasPerTx × maxFeePerGas` above this is denied |
+| spend limit | `rules.spendLimit.perAddressDaily.{maxTx,maxGasWei}` | `spend_limit.per_address_daily_tx` / `_gas` |
+| spend limit | `rules.spendLimit.globalDaily.maxGasWei` | `spend_limit.global_daily_budget` |
+| allowlist | `rules.allowlist.contracts[]` `{address,label,methods[],timeWindow?}` | `allowlist.contract` / `allowlist.method`. A contract may appear in several entries (e.g. one per method group with its own window) |
+| allowlist | `rules.allowlist.senders.{allow[],deny[]}` (optional) | `allowlist.sender` (`SENDER_NOT_ALLOWLISTED`) / `allowlist.sender_denylist` (`SENDER_DENYLISTED`) |
+| allowlist | `rules.allowlist.allowValue` | `allowlist.native_value` |
+| time window | `rules.timeWindow` `{timezone, days[], start, end, blackouts[]}` (optional; absent = always open) | `time_window.hours` (`OUTSIDE_TIME_WINDOW`), `time_window.blackout` (`BLACKOUT_WINDOW`) |
+| time window | `rules.allowlist.contracts[].timeWindow` | same ids, scoped to calls matching that entry |
+
+Time window fields: `timezone` IANA name (required); `days` subset of `Mon..Sun` (default all); `start`/`end` `HH:MM`
+local time, `end` exclusive, `"24:00"` allowed, `end < start` = overnight window; `blackouts[]` `{start,end,reason}`
+ISO-8601 instants with offset. All validated at load.
+
+The flat format below (`assets/policy.example.json`, `examples/policy.atlantic.json`) is still accepted; the gatekeeper
+fields map to `maxCostPerTxWei`, `senders`, `timeWindow` and `allowlist[].timeWindow` there.
+
+## Flat format
 
 | Field | Meaning |
 |---|---|
