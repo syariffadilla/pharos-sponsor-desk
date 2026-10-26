@@ -1,0 +1,133 @@
+{
+  "runs": [
+    {
+      "network": "atlantic-testnet",
+      "chainId": 688689,
+      "sponsor": "0x9074D663D93F3F0B29D3C817c17b94b2d8cE7FE8",
+      "executor": "0xb1Ee3cC528fa525b304562549b7716429a0937d5",
+      "guestbook": "0xAdB97503ad3A8BDA288C0c179818052b2b301638",
+      "steps": [
+        {
+          "step": "1-sponsored-zero-gas-user",
+          "account": "0x58422D77a897F0372ce441EBF72E79120679A25d",
+          "decision": "sponsored",
+          "reasons": [],
+          "authorizationIncluded": true,
+          "userBalanceBeforeWei": "0",
+          "userBalanceAfterWei": "0",
+          "sponsorBalanceDeltaWei": "110563000000000",
+          "txHash": "0x5fce28cdd2c1a5da58cf7a134b3d35d12e5389bd97573159ef1784285ca404ef",
+          "explorer": "https://atlantic.pharosscan.xyz/tx/0x5fce28cdd2c1a5da58cf7a134b3d35d12e5389bd97573159ef1784285ca404ef",
+          "txType": "eip7702",
+          "txFrom": "0x9074d663d93f3f0b29d3c817c17b94b2d8ce7fe8",
+          "txTo": "0x58422d77a897f0372ce441ebf72e79120679a25d",
+          "status": "success",
+          "gasLimit": "181611",
+          "gasUsed": "110563",
+          "effectiveGasPrice": "1000000000",
+          "receiptCostWei": "110563000000000",
+          "blockNumber": "31872311",
+          "checkedInEvents": [
+            {
+              "who": "0x58422D77a897F0372ce441EBF72E79120679A25d",
+              "count": "1",
+              "note": "gm from a 0-PHRS account, gas paid by Sponsor Desk"
+            }
+          ],
+          "delegationAfter": "0xb1ee3cc528fa525b304562549b7716429a0937d5"
+        }
+      ],
+      "guestbookCheckIns": {
+        "0x3A7E9F7BEae5F603082CCACE3aA49E66936f204A": "0",
+        "0x58422D77a897F0372ce441EBF72E79120679A25d": "1"
+      }
+    },
+    {
+      "network": "atlantic-testnet",
+      "chainId": 688689,
+      "sponsor": "0x9074D663D93F3F0B29D3C817c17b94b2d8cE7FE8",
+      "executor": "0xb1Ee3cC528fa525b304562549b7716429a0937d5",
+      "guestbook": "0xAdB97503ad3A8BDA288C0c179818052b2b301638",
+      "steps": [
+        {
+          "step": "2-rejected-by-quota",
+          "account": "0x58422D77a897F0372ce441EBF72E79120679A25d",
+          "decision": "rejected",
+          "reasons": [
+            {
+              "code": "ADDRESS_DAILY_TX_QUOTA",
+              "message": "1/1 sponsored tx already used today (UTC 2026-10-25)"
+            }
+          ],
+          "authorizationIncluded": false,
+          "userBalanceBeforeWei": "0",
+          "userBalanceAfterWei": "0",
+          "sponsorBalanceDeltaWei": "0"
+        },
+        {
+          "step": "3-rejected-method-not-allowlisted",
+          "account": "0x3A7E9F7BEae5F603082CCACE3aA49E66936f204A",
+          "decision": "rejected",
+          "reasons": [
+            {
+              "code": "NOT_ALLOWLISTED_METHOD",
+              "message": "call 0: selector 0xb8bf81bd on 0xAdB97503ad3A8BDA288C0c179818052b2b301638 is not an allowlisted method"
+            }
+          ],
+          "authorizationIncluded": true,
+          "userBalanceBeforeWei": "0",
+          "userBalanceAfterWei": "0",
+          "sponsorBalanceDeltaWei": "0"
+        },
+        {
+          "step": "4-rejected-target-not-allowlisted",
+          "account": "0x3A7E9F7BEae5F603082CCACE3aA49E66936f204A",
+          "decision": "rejected",
+          "reasons": [
+            {
+              "code": "NOT_ALLOWLISTED_TARGET",
+              "message": "call 0: target 0xcA11bde05977b3631167028862bE2a173976CA11 is not on the allowlist"
+            }
+          ],
+          "authorizationIncluded": true,
+          "userBalanceBeforeWei": "0",
+          "userBalanceAfterWei": "0",
+          "sponsorBalanceDeltaWei": "0"
+        },
+        {
+          "step": "5-sponsored-redelegation",
+          "account": "0x3A7E9F7BEae5F603082CCACE3aA49E66936f204A",
+          "decision": "sponsored",
+          "reasons": [],
+          "authorizationIncluded": true,
+          "userBalanceBeforeWei": "0",
+          "userBalanceAfterWei": "0",
+          "sponsorBalanceDeltaWei": "97358000000000",
+          "txHash": "0x60e99644267865a53470ecfc787af9c09e88763dfcd5110c0d34fe26767c04af",
+          "explorer": "https://atlantic.pharosscan.xyz/tx/0x60e99644267865a53470ecfc787af9c09e88763dfcd5110c0d34fe26767c04af",
+          "txType": "eip7702",
+          "txFrom": "0x9074d663d93f3f0b29d3c817c17b94b2d8ce7fe8",
+          "txTo": "0x3a7e9f7beae5f603082ccace3aa49e66936f204a",
+          "status": "success",
+          "gasLimit": "180476",
+          "gasUsed": "97358",
+          "effectiveGasPrice": "1000000000",
+          "receiptCostWei": "97358000000000",
+          "blockNumber": "31872327",
+          "checkedInEvents": [
+            {
+              "who": "0x3A7E9F7BEae5F603082CCACE3aA49E66936f204A",
+              "count": "1",
+              "note": "second user, also 0 PHRS"
+            }
+          ],
+          "delegationAfter": "0xb1ee3cc528fa525b304562549b7716429a0937d5"
+        }
+      ],
+      "guestbookCheckIns": {
+        "0x3A7E9F7BEae5F603082CCACE3aA49E66936f204A": "1",
+        "0x58422D77a897F0372ce441EBF72E79120679A25d": "1"
+      }
+    }
+  ]
+}
