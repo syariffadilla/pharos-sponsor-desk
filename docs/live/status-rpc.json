@@ -1,0 +1,33 @@
+{
+  "source": "rpc",
+  "network": "atlantic-testnet",
+  "chainId": 688689,
+  "chainIdMatches": true,
+  "latestBlock": "31872377",
+  "today": {
+    "day": "2026-10-25",
+    "spentWei": "207921000000000",
+    "budgetWei": "50000000000000000",
+    "remainingWei": "49792079000000000",
+    "sponsored": 2,
+    "rejected": 3
+  },
+  "sponsor": {
+    "address": "0x9074D663D93F3F0B29D3C817c17b94b2d8cE7FE8",
+    "balance": "1.998493752",
+    "balanceWei": "1998493752000000000"
+  },
+  "executorDeployed": true,
+  "accounts": [
+    {
+      "address": "0x58422D77a897F0372ce441EBF72E79120679A25d",
+      "balanceWei": "0",
+      "delegatedTo": "0xb1ee3cc528fa525b304562549b7716429a0937d5"
+    },
+    {
+      "address": "0x3A7E9F7BEae5F603082CCACE3aA49E66936f204A",
+      "balanceWei": "0",
+      "delegatedTo": "0xb1ee3cc528fa525b304562549b7716429a0937d5"
+    }
+  ]
+}
