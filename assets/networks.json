@@ -1,0 +1,22 @@
+{
+  "_source": "https://docs.pharos.xyz/getting-started/network/atlantic-testnet.md and https://github.com/PharosNetwork/pharos-skill-engine/blob/main/assets/networks.json (checked 2026-10-26). Re-check before use.",
+  "networks": [
+    {
+      "name": "atlantic-testnet",
+      "rpcUrl": "https://atlantic.dplabs-internal.com",
+      "chainId": 688689,
+      "explorerUrl": "https://atlantic.pharosscan.xyz/",
+      "nativeToken": "PHRS",
+      "rateLimit": "500 requests / 5 min (public RPC)"
+    },
+    {
+      "name": "mainnet",
+      "rpcUrl": "https://rpc.pharos.xyz",
+      "chainId": 1672,
+      "explorerUrl": "https://www.pharosscan.xyz/",
+      "nativeToken": "PROS",
+      "mcpUrl": "https://mcp.pharos.xyz/mcp"
+    }
+  ],
+  "defaultNetwork": "atlantic-testnet"
+}
