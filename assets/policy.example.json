@@ -1,0 +1,22 @@
+{
+  "network": "atlantic-testnet",
+  "executor": "0x0000000000000000000000000000000000000000",
+  "allowlist": [
+    { "address": "0x0000000000000000000000000000000000000000", "label": "your app contract", "methods": ["checkIn(string)"] }
+  ],
+  "perAddressDaily": { "maxTx": 1, "maxGasWei": "1000000000000000" },
+  "globalDaily": { "maxGasWei": "50000000000000000" },
+  "maxGasPerTx": 300000,
+  "maxCallsPerRequest": 4,
+  "maxDeadlineSec": 3600,
+  "allowValue": false,
+  "heuristics": {
+    "newAddressWindowSec": 600,
+    "maxNewAddressesPerWindow": 5,
+    "freshNonceThreshold": 1,
+    "burstWindowSec": 60,
+    "maxRequestsPerBurst": 3,
+    "failureWindowSec": 86400,
+    "maxFailures": 3
+  }
+}
