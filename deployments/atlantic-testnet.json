@@ -1,0 +1,16 @@
+{
+  "network": "atlantic-testnet",
+  "chainId": 688689,
+  "deployer": "0x9074D663D93F3F0B29D3C817c17b94b2d8cE7FE8",
+  "deployedAt": "2026-10-25T18:00:59Z (block timestamp)",
+  "SponsoredExecutor": {
+    "address": "0xb1Ee3cC528fa525b304562549b7716429a0937d5",
+    "txHash": "0xcbbe86c9d82c579790f0d48f87758ecd6c935c4936e6160c001e63b0d1591f8c",
+    "blockNumber": "31872261"
+  },
+  "DeskGuestbook": {
+    "address": "0xAdB97503ad3A8BDA288C0c179818052b2b301638",
+    "txHash": "0xb5f564c34ce8b94e720ad2ab015d02e4e3c6714853276ec95198d3dd696f5595",
+    "blockNumber": "31872264"
+  }
+}
