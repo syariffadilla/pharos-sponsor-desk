@@ -1,0 +1,61 @@
+{
+  "day": "2026-10-25",
+  "network": "atlantic-testnet",
+  "generatedAt": "2026-10-25T18:03:15Z",
+  "totals": {
+    "requests": 5,
+    "sponsored": 2,
+    "rejected": 3,
+    "failed": 0,
+    "spentWei": "207921000000000",
+    "spent": "0.000207921",
+    "budgetWei": "50000000000000000",
+    "budgetUsedPct": 0.41
+  },
+  "rejectionsByReason": {
+    "ADDRESS_DAILY_TX_QUOTA": 1,
+    "NOT_ALLOWLISTED_METHOD": 1,
+    "NOT_ALLOWLISTED_TARGET": 1
+  },
+  "byAccount": [
+    {
+      "account": "0x58422d77a897f0372ce441ebf72e79120679a25d",
+      "sponsored": 1,
+      "rejected": 1,
+      "failed": 0,
+      "spentWei": "110563000000000"
+    },
+    {
+      "account": "0x3a7e9f7beae5f603082ccace3aa49e66936f204a",
+      "sponsored": 1,
+      "rejected": 2,
+      "failed": 0,
+      "spentWei": "97358000000000"
+    }
+  ],
+  "byTarget": [
+    {
+      "to": "0xAdB97503ad3A8BDA288C0c179818052b2b301638",
+      "method": "checkIn(string)",
+      "sponsored": 2
+    }
+  ],
+  "transactions": [
+    {
+      "txHash": "0x5fce28cdd2c1a5da58cf7a134b3d35d12e5389bd97573159ef1784285ca404ef",
+      "account": "0x58422D77a897F0372ce441EBF72E79120679A25d",
+      "decision": "sponsored",
+      "gasUsed": "110563",
+      "costWei": "110563000000000",
+      "url": "https://atlantic.pharosscan.xyz/tx/0x5fce28cdd2c1a5da58cf7a134b3d35d12e5389bd97573159ef1784285ca404ef"
+    },
+    {
+      "txHash": "0x60e99644267865a53470ecfc787af9c09e88763dfcd5110c0d34fe26767c04af",
+      "account": "0x3A7E9F7BEae5F603082CCACE3aA49E66936f204A",
+      "decision": "sponsored",
+      "gasUsed": "97358",
+      "costWei": "97358000000000",
+      "url": "https://atlantic.pharosscan.xyz/tx/0x60e99644267865a53470ecfc787af9c09e88763dfcd5110c0d34fe26767c04af"
+    }
+  ]
+}
