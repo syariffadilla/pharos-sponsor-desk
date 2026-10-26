@@ -1,0 +1,23 @@
+{
+  "source": "rpc",
+  "hash": "0x5fce28cdd2c1a5da58cf7a134b3d35d12e5389bd97573159ef1784285ca404ef",
+  "type": "eip7702",
+  "gasPayer": "0x9074d663d93f3f0b29d3c817c17b94b2d8ce7fe8",
+  "account": "0x58422d77a897f0372ce441ebf72e79120679a25d",
+  "authorizationList": [
+    {
+      "address": "0xb1ee3cc528fa525b304562549b7716429a0937d5",
+      "chainId": 688689,
+      "nonce": 0,
+      "r": "0xb06de64b12dd9a733b4e96d74b12630620154645bebae097fbcd6186dd028ff4",
+      "s": "0x3eb34cd22fb9f5c46f72387616080dca47d5a4eab6f6a44d3692356f4b678c7b",
+      "yParity": 1
+    }
+  ],
+  "status": "success",
+  "gasUsed": "110563",
+  "effectiveGasPrice": "1000000000",
+  "costWei": "110563000000000",
+  "blockNumber": "31872311",
+  "explorer": "https://atlantic.pharosscan.xyz/tx/0x5fce28cdd2c1a5da58cf7a134b3d35d12e5389bd97573159ef1784285ca404ef"
+}
