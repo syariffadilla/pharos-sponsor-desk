@@ -1,0 +1,263 @@
+{
+  "runs": [
+    {
+      "mode": "live",
+      "network": "atlantic-testnet",
+      "chainId": 688689,
+      "explorer": "https://atlantic.pharosscan.xyz/",
+      "policyFile": "examples/policy.gatekeeper.json",
+      "sponsor": "0x9074D663D93F3F0B29D3C817c17b94b2d8cE7FE8",
+      "executor": "0xb1Ee3cC528fa525b304562549b7716429a0937d5",
+      "guestbook": "0xAdB97503ad3A8BDA288C0c179818052b2b301638",
+      "rules": {
+        "spend_limit": {
+          "spend_limit.max_gas_per_tx": 300000,
+          "spend_limit.max_cost_per_tx": "1000000000000000",
+          "spend_limit.per_address_daily_tx": 1,
+          "spend_limit.per_address_daily_gas": "1000000000000000",
+          "spend_limit.global_daily_budget": "50000000000000000"
+        },
+        "allowlist": {
+          "allowlist.contract+method": [
+            {
+              "address": "0xAdB97503ad3A8BDA288C0c179818052b2b301638",
+              "label": "DeskGuestbook check-in",
+              "methods": [
+                "checkIn(string)"
+              ]
+            },
+            {
+              "address": "0xAdB97503ad3A8BDA288C0c179818052b2b301638",
+              "label": "DeskGuestbook motto (weekend campaign only)",
+              "methods": [
+                "setMotto(string)"
+              ]
+            }
+          ],
+          "allowlist.sender": "any",
+          "allowlist.sender_denylist": [
+            "0xE5EE78a15A86912df2be98b8F69CC0e932a50Bc4"
+          ],
+          "allowlist.native_value": "denied"
+        },
+        "time_window": {
+          "time_window.hours (desk)": "Mon,Tue,Wed,Thu,Fri,Sat,Sun 06:00-23:00 Asia/Jakarta",
+          "time_window.blackout (desk)": [
+            {
+              "start": "2026-12-31T22:00:00+07:00",
+              "end": "2027-01-01T02:00:00+07:00",
+              "reason": "new-year maintenance freeze"
+            }
+          ],
+          "time_window.hours (per contract)": [
+            {
+              "address": "0xAdB97503ad3A8BDA288C0c179818052b2b301638",
+              "label": "DeskGuestbook motto (weekend campaign only)",
+              "window": "Sat,Sun 00:00-24:00 Asia/Jakarta",
+              "blackouts": []
+            }
+          ]
+        }
+      },
+      "steps": [
+        {
+          "step": "A1-allow-fresh-user",
+          "scenario": "fresh 0-PHRS user, allowlisted checkIn, inside desk hours, within quota",
+          "expected": "allow",
+          "sender": "0xe0B382f29b6907d5629d3E2B06482C0FF1904cd1",
+          "senderRole": "user4",
+          "verdict": "allow",
+          "rule": "gate.all_rules_passed",
+          "ruleType": "gate",
+          "code": "ALL_RULES_PASSED",
+          "message": "passed all 7 gate stages (request, allowlist, time window, signature, spend limit, abuse, simulation); executed",
+          "localTime": "Mon 16:35 Asia/Jakarta",
+          "requestHash": "0xef1a44af64ced400ca003e067105025beeb6bc1409b1ee4327b977ea40a70eee",
+          "executed": true,
+          "txHash": "0x29a2c59ad71a1a7e31762b2dffc2c5799fd19f76a9d625dc34a47c0aeb64cb40",
+          "explorer": "https://atlantic.pharosscan.xyz/tx/0x29a2c59ad71a1a7e31762b2dffc2c5799fd19f76a9d625dc34a47c0aeb64cb40",
+          "sponsorNonceBefore": 7,
+          "sponsorNonceAfter": 8,
+          "sponsorBalanceBeforeWei": "1998493752000000000",
+          "sponsorBalanceAfterWei": "1998383297000000000",
+          "auditSeq": 1,
+          "auditHash": "0x0a4767051490dd624c588726b3d67b442c6b7c408f563d343da622f65793bfd7",
+          "onchain": {
+            "status": "success",
+            "type": "eip7702",
+            "from": "0x9074d663d93f3f0b29d3c817c17b94b2d8ce7fe8",
+            "to": "0xe0b382f29b6907d5629d3e2b06482c0ff1904cd1",
+            "blockNumber": "31899336",
+            "gasUsed": "110455",
+            "effectiveGasPrice": "1000000000",
+            "costWei": "110455000000000",
+            "checkedIn": [
+              {
+                "who": "0xe0B382f29b6907d5629d3E2B06482C0FF1904cd1",
+                "count": "1",
+                "note": "gatekeeper: allowed, gas paid by sponsor"
+              }
+            ]
+          },
+          "matchesExpectation": true
+        },
+        {
+          "step": "A2-allow-delegated",
+          "scenario": "already-delegated user, allowlisted checkIn",
+          "expected": "allow",
+          "sender": "0x3A7E9F7BEae5F603082CCACE3aA49E66936f204A",
+          "senderRole": "user1",
+          "verdict": "allow",
+          "rule": "gate.all_rules_passed",
+          "ruleType": "gate",
+          "code": "ALL_RULES_PASSED",
+          "message": "passed all 7 gate stages (request, allowlist, time window, signature, spend limit, abuse, simulation); executed",
+          "localTime": "Mon 16:35 Asia/Jakarta",
+          "requestHash": "0xc3f506737b044de0cd867a7318e0c20027de01a0b9fb9673e487b766fc209b6d",
+          "executed": true,
+          "txHash": "0x888e780286b7d06157270ccdc97bf02817c548c7a68141751738a01440ffeabb",
+          "explorer": "https://atlantic.pharosscan.xyz/tx/0x888e780286b7d06157270ccdc97bf02817c548c7a68141751738a01440ffeabb",
+          "sponsorNonceBefore": 8,
+          "sponsorNonceAfter": 9,
+          "sponsorBalanceBeforeWei": "1998383297000000000",
+          "sponsorBalanceAfterWei": "1998332639000000000",
+          "auditSeq": 2,
+          "auditHash": "0x7c488349fff4de0a341b1c3187f30be3d3ca37971a9f44d1e66ab4115efc50cf",
+          "onchain": {
+            "status": "success",
+            "type": "eip1559",
+            "from": "0x9074d663d93f3f0b29d3c817c17b94b2d8ce7fe8",
+            "to": "0x3a7e9f7beae5f603082ccace3aa49e66936f204a",
+            "blockNumber": "31899347",
+            "gasUsed": "50658",
+            "effectiveGasPrice": "1000000000",
+            "costWei": "50658000000000",
+            "checkedIn": [
+              {
+                "who": "0x3A7E9F7BEae5F603082CCACE3aA49E66936f204A",
+                "count": "2",
+                "note": "gatekeeper: allowed again"
+              }
+            ]
+          },
+          "matchesExpectation": true
+        },
+        {
+          "step": "D1-deny-spend-limit",
+          "scenario": "same user again the same UTC day (perAddressDaily.maxTx = 1)",
+          "expected": "spend_limit",
+          "sender": "0xe0B382f29b6907d5629d3E2B06482C0FF1904cd1",
+          "senderRole": "user4",
+          "verdict": "deny",
+          "rule": "spend_limit.per_address_daily_tx",
+          "ruleType": "spend_limit",
+          "code": "ADDRESS_DAILY_TX_QUOTA",
+          "message": "1/1 sponsored tx already used today (UTC 2026-10-26)",
+          "localTime": "Mon 16:35 Asia/Jakarta",
+          "requestHash": "0x007aaf6c00f333f4681df2e5aa3e64f32cf02fbf5238f3a18cca47b4c0d0c22c",
+          "executed": false,
+          "txHash": null,
+          "explorer": null,
+          "sponsorNonceBefore": 9,
+          "sponsorNonceAfter": 9,
+          "sponsorBalanceBeforeWei": "1998332639000000000",
+          "sponsorBalanceAfterWei": "1998332639000000000",
+          "auditSeq": 3,
+          "auditHash": "0x8f8c1f4517ec973fac0a7896851620de9ae5e4882cc907052cbcb68e4c1cd667",
+          "matchesExpectation": true
+        },
+        {
+          "step": "D2-deny-allowlist",
+          "scenario": "target contract (Multicall3) not on the allowlist",
+          "expected": "allowlist",
+          "sender": "0x58422D77a897F0372ce441EBF72E79120679A25d",
+          "senderRole": "user2",
+          "verdict": "deny",
+          "rule": "allowlist.contract",
+          "ruleType": "allowlist",
+          "code": "NOT_ALLOWLISTED_TARGET",
+          "message": "call 0: target 0xcA11bde05977b3631167028862bE2a173976CA11 is not on the allowlist",
+          "localTime": "Mon 16:35 Asia/Jakarta",
+          "requestHash": "0x2fba3dff00bad3cd2894239bd3a2f3c95cd93d2e1a26e1f37352b8a2e53a92b0",
+          "executed": false,
+          "txHash": null,
+          "explorer": null,
+          "sponsorNonceBefore": 9,
+          "sponsorNonceAfter": 9,
+          "sponsorBalanceBeforeWei": "1998332639000000000",
+          "sponsorBalanceAfterWei": "1998332639000000000",
+          "auditSeq": 4,
+          "auditHash": "0x0a7e3ffcaca3ada3d4eb2c7df8698759f4fdbc577f5c396116391b5f98b85948",
+          "matchesExpectation": true
+        },
+        {
+          "step": "D3-deny-sender-list",
+          "scenario": "sender is on rules.allowlist.senders.deny",
+          "expected": "allowlist",
+          "sender": "0xE5EE78a15A86912df2be98b8F69CC0e932a50Bc4",
+          "senderRole": "user3",
+          "verdict": "deny",
+          "rule": "allowlist.sender_denylist",
+          "ruleType": "allowlist",
+          "code": "SENDER_DENYLISTED",
+          "message": "sender 0xE5EE78a15A86912df2be98b8F69CC0e932a50Bc4 is on the denylist",
+          "localTime": "Mon 16:35 Asia/Jakarta",
+          "requestHash": "0xab33aec867693644007a41fbaacf3fda8224fa22d32f4cdcf6311cf58431c429",
+          "executed": false,
+          "txHash": null,
+          "explorer": null,
+          "sponsorNonceBefore": 9,
+          "sponsorNonceAfter": 9,
+          "sponsorBalanceBeforeWei": "1998332639000000000",
+          "sponsorBalanceAfterWei": "1998332639000000000",
+          "auditSeq": 5,
+          "auditHash": "0x5827cb34542c1f6851954a8373e35f908fc082884e2f5f698ebfb646aed715a5",
+          "matchesExpectation": true
+        },
+        {
+          "step": "D4-deny-time-window",
+          "scenario": "setMotto is allowlisted only for the weekend campaign window (Sat-Sun Asia/Jakarta)",
+          "expected": "time_window",
+          "sender": "0x58422D77a897F0372ce441EBF72E79120679A25d",
+          "senderRole": "user2",
+          "verdict": "deny",
+          "rule": "time_window.hours",
+          "ruleType": "time_window",
+          "code": "OUTSIDE_TIME_WINDOW",
+          "message": "DeskGuestbook motto (weekend campaign only): Mon 16:35 Asia/Jakarta is outside the allowed window Sat,Sun 00:00-24:00 Asia/Jakarta",
+          "localTime": "Mon 16:35 Asia/Jakarta",
+          "requestHash": "0x3767895a6c11dd52e30ed0c8bf6593d0bea0d8853ab7d102928b91cb2e00db89",
+          "executed": false,
+          "txHash": null,
+          "explorer": null,
+          "sponsorNonceBefore": 9,
+          "sponsorNonceAfter": 9,
+          "sponsorBalanceBeforeWei": "1998332639000000000",
+          "sponsorBalanceAfterWei": "1998332639000000000",
+          "auditSeq": 6,
+          "auditHash": "0x4feabf43e3085566b3c67fff34053edbf21a22d65b08fe0d4a3f4e6ee3871be5",
+          "matchesExpectation": true
+        }
+      ],
+      "allMatchExpectation": true,
+      "audit": {
+        "file": "docs/gatekeeper/audit.jsonl",
+        "ok": true,
+        "entries": 6,
+        "brokenAt": null,
+        "summary": {
+          "entries": 6,
+          "allow": 2,
+          "deny": 4,
+          "executed": 2,
+          "deniedButExecuted": 0,
+          "denialsByRuleType": {
+            "spend_limit": 1,
+            "allowlist": 2,
+            "time_window": 1
+          }
+        }
+      }
+    }
+  ]
+}
