@@ -1,0 +1,33 @@
+{
+  "network": "atlantic-testnet",
+  "executor": "0xb1Ee3cC528fa525b304562549b7716429a0937d5",
+  "allowlist": [
+    {
+      "address": "0xAdB97503ad3A8BDA288C0c179818052b2b301638",
+      "label": "DeskGuestbook (demo)",
+      "methods": [
+        "checkIn(string)"
+      ]
+    }
+  ],
+  "perAddressDaily": {
+    "maxTx": 1,
+    "maxGasWei": "1000000000000000"
+  },
+  "globalDaily": {
+    "maxGasWei": "50000000000000000"
+  },
+  "maxGasPerTx": 300000,
+  "maxCallsPerRequest": 4,
+  "maxDeadlineSec": 3600,
+  "allowValue": false,
+  "heuristics": {
+    "newAddressWindowSec": 600,
+    "maxNewAddressesPerWindow": 5,
+    "freshNonceThreshold": 1,
+    "burstWindowSec": 60,
+    "maxRequestsPerBurst": 3,
+    "failureWindowSec": 86400,
+    "maxFailures": 3
+  }
+}
