@@ -1,0 +1,20 @@
+{
+  "source": "mcp",
+  "network": "Pharos",
+  "chainId": 688689,
+  "chainIdMatches": true,
+  "latestBlock": "31872378",
+  "today": {
+    "day": "2026-10-25",
+    "spentWei": "207921000000000",
+    "budgetWei": "50000000000000000",
+    "remainingWei": "49792079000000000",
+    "sponsored": 2,
+    "rejected": 3
+  },
+  "sponsor": {
+    "address": "0x9074D663D93F3F0B29D3C817c17b94b2d8cE7FE8",
+    "balance": "1.998493752",
+    "balanceWei": "1998493752000000000"
+  }
+}
